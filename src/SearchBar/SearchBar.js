@@ -4,8 +4,16 @@ import './SearchBar.css';
 class SearchBar extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
-    const { query, apiKey } = this.props;
-    const url = `https://www.googleapis.com/books/v1/volumes?q=${query}&key=${apiKey}`;
+
+    const { queryParams, apiKey } = this.props;
+
+    const url = new URL('https://www.googleapis.com/books/v1/volumes');
+    Object.keys(queryParams).forEach(key => {
+      if (queryParams[key]) {
+        url.searchParams.append(key, queryParams[key])
+      }
+    });
+    url.searchParams.append('apiKey', apiKey);
 
     fetch(url, { method: 'GET' })
       .then(res => {
@@ -14,7 +22,7 @@ class SearchBar extends React.Component {
         }
         return res.json();
       })
-      .then(data => console.log(data))
+      .then(data => this.props.setBookData(data))
       .catch(err => {
         console.log(err.message);
       });
@@ -24,7 +32,7 @@ class SearchBar extends React.Component {
     return (
       <div className='SearchBar'>
         <form className='SearchBar__form' onSubmit={e => this.handleSubmit(e)}>
-          <label htmlFor="search">Search:</label>
+          <label htmlFor="search">Search: </label>
           <input
             type="text"
             name='search'

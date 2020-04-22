@@ -17,9 +17,9 @@ class App extends React.Component {
     };
   }
   
-  queryChanged(query) {
+  queryChanged(q) {
     this.setState({
-      query
+      q
     });
   }
 
@@ -29,32 +29,39 @@ class App extends React.Component {
     });
   }
 
-  bookTypeChanged(bookType) {
+  bookTypeChanged(filter) {
     this.setState({
-      bookType
+      filter
     });
   }
 
-  componentDidMount() {
-
+  setBookData(data) {
+    this.setState({
+      books: data
+    });
   }
   
   render() {
+    const bookList = this.state.books
+      ? <BookList books={this.state.books.items} />
+      : '';
+
     return (
       <div className='App'>
         <header className='App_header'>
           <h1>Google Book Search</h1>
         </header>
         <SearchBar
-          setQuery={query => this.queryChanged(query)}
-          query={this.state.query}
+          setQuery={q => this.queryChanged(q)}
+          queryParams={this.state}
           apiKey={apiKey}
+          setBookData={data => this.setBookData(data)}
         />
         <FilterBar
           setPrintType={printType => this.printTypeChanged(printType)}
           setBookType={bookType => this.bookTypeChanged(bookType)}
         />
-        <BookList />
+        {bookList}
       </div>
     );
   }

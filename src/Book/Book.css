@@ -1,0 +1,17 @@
+.Book {
+  padding-top: 10px;
+  display: flex;
+  flex-direction: row;
+}
+
+.Book_info {
+  padding-left: 10px;
+}
+
+.Book_info h1 {
+  margin: 0;
+}
+
+.Book_info h4 {
+  margin: 2px;
+}

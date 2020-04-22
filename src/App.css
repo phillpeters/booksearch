@@ -1,0 +1,13 @@
+.App {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+
+.App_header {
+  color: white;
+  background-color: black;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
